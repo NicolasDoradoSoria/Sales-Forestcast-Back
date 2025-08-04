@@ -1,0 +1,63 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password_hash String
+  role          String   @default("USER")
+  created_at    DateTime @default(now())
+
+  refreshTokens RefreshToken[]
+  salesData     SalesData[]
+  forecasts Forecast[]
+
+}
+
+model RefreshToken {
+  id         Int      @id @default(autoincrement())
+  token      String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  created_at DateTime @default(now())
+  expires_at DateTime
+}
+
+model SalesData {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  sku          String
+  date         DateTime
+  quantity     Int
+  price        Float
+  promotion    Boolean
+  category     String
+  uploaded_at  DateTime @default(now())
+  file_name    String
+  data_version Int
+}
+
+model Forecast {
+  id               Int      @id @default(autoincrement())
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int
+  sku              String
+  forecast_date    DateTime
+  base_value       Int
+  upper_bound      Int
+  lower_bound      Int
+  confidence_level Float
+  seasonal_factor  Float
+  trend_component  Float
+  generated_at     DateTime @default(now())
+  model_version    String
+  data_quality_score Float
+}
+
