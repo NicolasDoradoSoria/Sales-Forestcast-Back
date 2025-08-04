@@ -2,6 +2,10 @@
 
 Aplicación backend para cargar datos históricos de ventas y generar predicciones de demanda.
 
+# Login
+email: 'user@example.com'
+
+
 ## 🚀 Features
 
 - Autenticación con JWT
