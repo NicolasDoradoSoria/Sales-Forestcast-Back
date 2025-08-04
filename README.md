@@ -4,7 +4,7 @@ Aplicación backend para cargar datos históricos de ventas y generar prediccion
 
 # Login
 email: 'user@example.com'
-
+passworld: "user123"
 
 ## 🚀 Features
 
